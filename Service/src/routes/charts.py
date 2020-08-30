@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, make_response, request, Response, g
 import requests
 import simplejson as json
 import time
+import os
 
 from auth import auth
 from request_validator import validator
@@ -22,8 +23,12 @@ charts_api = Blueprint('charts_api', __name__)
 
 URL_PREFIX = 'https://cloud.iexapis.com/v1/stock/'
 
-CONFIG_FILE_PATH = "/Users/rohithdara/dev/StockDog/Service/src/routes/config.json"
+CONFIG_FILE_PATH = "Service/src/routes/config.json"
 
+def getConfigFilePath():
+   cwd = os.getcwd()
+   strIdx = cwd.find('StockDog/')
+   return cwd[:strIdx + 9] + CONFIG_FILE_PATH
 
 @charts_api.route('/api/charts', methods=['GET'])
 @auth.login_required
@@ -38,7 +43,7 @@ def extract_args():
 def get_history(ticker, length):
    interval = getInterval(length)
    try:
-      configFile = open(CONFIG_FILE_PATH, 'r')
+      configFile = open(getConfigFilePath(), 'r')
       config = json.load(configFile)
       configFile.close()
    except Exception as e:
@@ -52,7 +57,6 @@ def get_history(ticker, length):
 
    try:
       response = rawResponse.json()
-      g.log.info(response, isPprint=True)
    except:
       return make_response(jsonify(InvalidTicker=errors['unsupportedTicker']), 400)
 
@@ -110,8 +114,6 @@ def formatDataIntraday(jsonData):
    NoneItemsIEX = 0 
    for item in jsonData:
       if item['average'] is None:
-         print(item)
-         NoneItemsIEX += 1
          continue
       if item['average'] < 0:
          continue
@@ -122,8 +124,5 @@ def formatDataIntraday(jsonData):
          'epochTime' : itemTime.timestamp(),
          'price' : item['average']
       })
-   # if NoneItemsIEX > 2:
-   #    return make_response(jsonify(BrokenIEXResponse=errors['IEX Response Missing Entries']), 500)
-
    data.sort(key=lambda item:item['epochTime'], reverse=False)
    return data

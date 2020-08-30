@@ -93,6 +93,7 @@ echo -e "${GREEN}Successfully setup service module${RESTORE}\n"
 
 ###############################################################################
 # Setup the StockDog database
+echo "Creating the StockDog database"
 cd "$SERVICE_MODULE_DIR"
 init_sql="${SERVICE_MODULE_DIR}/db/init.sql"
 echo "${YELLOW}${LOG_FILE}${RESTORE}"

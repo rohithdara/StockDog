@@ -9,7 +9,6 @@ watchlist_api = Blueprint('watchlist_api', __name__)
 @watchlist_api.route('/api/watchlist', methods=['POST'])
 def post_watchlist():
    body = request.get_json()
-   g.log.info(str(body))
    try:
       result = WatchlistSchema().load(body)
    except ValidationError as err:

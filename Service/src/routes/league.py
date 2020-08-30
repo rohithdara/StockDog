@@ -14,11 +14,6 @@ DATE_FORMAT = "%m-%d-%Y"
 @league_api.route('/api/league', methods=['POST'])
 def post_league():
    body = request.get_json()
-   # try:
-   #    result = LeagueSchema().load(body)
-   # except ValidationError as err:
-   #    return make_response(json.dumps(err.messages), 400)
-
    inviteCode = Utility.getInviteCode()
 
    try:

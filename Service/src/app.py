@@ -49,7 +49,6 @@ def index():
 
 @app.errorhandler(404)
 def not_found(error):
-   print(error)
    return Response('Not Found', status=404)
 
 
