@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS StockDog;
 CREATE DATABASE StockDog;
 USE StockDog;
+SET FOREIGN_KEY_CHECKS=0;
 
 CREATE TABLE User (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -27,7 +28,7 @@ CREATE TABLE Portfolio (
 
 CREATE TABLE Ticker (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
-   symbol VARCHAR(8),
+   symbol VARCHAR(8) UNIQUE,
    company VARCHAR(32)
 );
 
@@ -38,7 +39,7 @@ CREATE TABLE Transaction (
    shareCount INT(11),
    action VARCHAR(12),
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker VARCHAR(8) REFERENCES Ticker(symbol),
+   ticker VARCHAR(8),
    leagueId INT(11) REFERENCES League(id),
    dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
    dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -48,7 +49,7 @@ CREATE TABLE Transaction (
 CREATE TABLE Watchlist (
    id INT(11) AUTO_INCREMENT PRIMARY KEY,
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker VARCHAR(8) REFERENCES Ticker(symbol),
+   ticker VARCHAR(8),
    dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
    dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -69,7 +70,7 @@ CREATE TABLE PortfolioItem (
    shareCount INT(11),
    avgCost DECIMAL(13, 2),
    portfolioId INT(11) REFERENCES Portfolio(id),
-   ticker VARCHAR(8) REFERENCES Ticker(symbol),
+   ticker VARCHAR(8),
    dateCreated DATETIME DEFAULT CURRENT_TIMESTAMP,
    dateUpdated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

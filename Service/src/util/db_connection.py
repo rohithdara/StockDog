@@ -2,7 +2,7 @@ import pymysql
 import os
 import simplejson as json
 
-CONFIG_FILE_PATH = 'Service/db/config.json'
+CONFIG_FILE_PATH = "Service/db/config.json"
 
 def getConfigFilePath():
    cwd = os.getcwd()

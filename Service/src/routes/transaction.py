@@ -90,7 +90,7 @@ def sell(sharePrice, requestBody):
    g.cursor.execute("INSERT INTO Transaction" +
       "(sharePrice, shareCount, action, portfolioId, ticker, leagueId) " +
       "VALUES (%s, %s, %s, %s, %s, %s)",
-      [sharePrice, requestBody['shareCount'], 0, requestBody['portfolioId'], requestBody['ticker'], portfolio['leagueId']])
+      [sharePrice, requestBody['shareCount'], "SELL", requestBody['portfolioId'], requestBody['ticker'], portfolio['leagueId']])
    transactionId = g.cursor.lastrowid
 
    g.cursor.execute("UPDATE Portfolio SET buyPower = buyPower + %s WHERE id = %s",

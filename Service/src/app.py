@@ -42,7 +42,7 @@ def setup():
 
 
 @app.route('/')
-@app.route('/api/v1.0')
+@app.route('/api')
 def index():
    return "What's good StockDog!"
 
