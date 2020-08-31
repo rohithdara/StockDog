@@ -110,7 +110,6 @@ def formatDataInterDay(jsonData):
 
 def formatDataIntraday(jsonData):
    data = []
-   NoneItemsIEX = 0 
    for item in jsonData:
       if item['average'] is None:
          continue
