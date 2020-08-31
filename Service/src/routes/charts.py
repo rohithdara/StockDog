@@ -9,7 +9,6 @@ from auth import auth
 from request_validator import validator
 from request_validator.schemas import charts_schema
 from util.error_map import errors
-from util.db_connection import getConfigFilePath
 
 DAY = '1d'
 MONTH = '1m'
